@@ -17,6 +17,8 @@ func main() {
 		ch <- word
 	}
 
+	close(ch)
+
 	for i := 0; i < len(words); i++ {
 		fmt.Println(<-ch + " ")
 	}
