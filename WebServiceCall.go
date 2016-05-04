@@ -23,15 +23,25 @@ func main() {
 		"s",
 	}
 
+	counter := 0
+
 	for _, val := range stockSymbols {
-		resp, _ := http.Get("http://dev.markitondemand.com/MODApis/Api/v2/Quote?symbol=" + val)
-		defer resp.Body.Close() //Close when main function finishes
+		go func(val string) {
 
-		body, _ := ioutil.ReadAll(resp.Body)
-		quote := new(QuoteResponse)
-		xml.Unmarshal(body, &quote)
+			resp, _ := http.Get("http://dev.markitondemand.com/MODApis/Api/v2/Quote?symbol=" + val)
+			defer resp.Body.Close() //Close when main function finishes
 
-		fmt.Printf("%s: %.2f\n", quote.Name, quote.LastPrice)
+			body, _ := ioutil.ReadAll(resp.Body)
+			quote := new(QuoteResponse)
+			xml.Unmarshal(body, &quote)
+
+			fmt.Printf("%s: %.2f\n", quote.Name, quote.LastPrice)
+			counter++
+		}(val)
+	}
+
+	for counter < (len(stockSymbols)) {
+		time.Sleep(10 * time.Millisecond)
 	}
 
 	elapsed := time.Since(start)
