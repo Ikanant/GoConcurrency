@@ -1,10 +1,13 @@
 package main
 
 import (
+	"runtime"
 	"time"
 )
 
 func main() {
+	// Allow the app to use up to 2 processors for the application
+	runtime.GOMAXPROCS(2)
 
 	godur, _ := time.ParseDuration("10ms")
 
