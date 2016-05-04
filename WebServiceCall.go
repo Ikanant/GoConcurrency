@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"io/ioutil" // Will give us the ability to read the response from the call
 	"net/http"  // Allow us to make the web request from our app
+	"time"
 )
 
 func main() {
+	start := time.Now()
+
 	resp, _ := http.Get("http://dev.markitondemand.com/MODApis/Api/v2/Quote?symbol=googl")
 	defer resp.Body.Close() //Close when main function finishes
 
@@ -17,7 +20,10 @@ func main() {
 
 	xml.Unmarshal(body, &quote)
 
-	fmt.Printf("%s: %.2f", quote.Name, quote.LastPrice)
+	fmt.Printf("%s: %.2f\n", quote.Name, quote.LastPrice)
+
+	elapsed := time.Since(start)
+	fmt.Printf("Execution time: %s", elapsed)
 }
 
 type QuoteResponse struct {
