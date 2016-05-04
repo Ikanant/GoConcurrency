@@ -5,7 +5,8 @@ import (
 	"fmt"       // Take the string and processes to allow us to pull out each field and record
 	"io/ioutil" // Quickly read content from the invoice file in the memory
 	"os"        // Get access to file system to watch the folder
-	"strconv"   // Will help handle non-string fields
+	"runtime"
+	"strconv" // Will help handle non-string fields
 	"strings"
 	"time" // Conert Unix Timestamp int he invoice file to a time object
 )
@@ -14,6 +15,7 @@ import (
 const watchedPath = "./sourceInvoice"
 
 func main() {
+	runtime.GOMAXPROCS(4)
 
 	fmt.Println("Monitoring folder: ", watchedPath)
 
