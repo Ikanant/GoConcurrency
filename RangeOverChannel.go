@@ -18,12 +18,8 @@ func main() {
 
 	close(ch)
 
-	for {
-		if msg, ok := <-ch; ok {
-			fmt.Print(msg + " ")
-		} else {
-			break
-		}
+	for msg := range ch {
+		fmt.Print(msg + " ")
 	}
 
 }
