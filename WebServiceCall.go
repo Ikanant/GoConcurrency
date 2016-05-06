@@ -5,12 +5,10 @@ import (
 	"fmt"
 	"io/ioutil" // Will give us the ability to read the response from the call
 	"net/http"  // Allow us to make the web request from our app
-	"runtime"
 	"time"
 )
 
 func main() {
-	runtime.GOMAXPROCS(4)
 
 	start := time.Now()
 
