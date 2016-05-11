@@ -14,9 +14,14 @@ func main() {
 		po := obj.(*PurchaseOrder)
 		fmt.Printf("Purchase Order saved with ID: %d\n", po.Number)
 
-		return nil
+		return errors.New("First promise failed")
 	}, func(err error) {
 		fmt.Printf("Failed to save Purchase Order: " + err.Error() + "\n")
+	}).Then(func(obj interface{}) error {
+		fmt.Println("Second promise success")
+		return nil
+	}, func(err error) {
+		fmt.Println("Second promise failed: " + err.Error())
 	})
 
 	fmt.Scanln()
