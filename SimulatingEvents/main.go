@@ -21,7 +21,7 @@ func main() {
 
 	go func() {
 		for {
-			msg := <-handlerOne
+			msg := <-handlerTwo
 			fmt.Println("Handler Two: " + msg)
 		}
 	}()
@@ -39,7 +39,7 @@ func main() {
 type Button struct {
 	// Key is a String for the event that we need to listen for
 	// Value will be a Slice of Channels that will accept the event object
-	eventListeners map[string][]chan string
+	eventListeners map[string][]chan string // Listen for events
 }
 
 func MakeButton() *Button {
@@ -49,7 +49,6 @@ func MakeButton() *Button {
 	return result
 }
 
-// AddEventListener
 func (this *Button) AddEventListener(event string, responseChannel chan string) {
 	if _, present := this.eventListeners[event]; present {
 		this.eventListeners[event] = append(this.eventListeners[event], responseChannel)
